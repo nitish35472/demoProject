@@ -112,7 +112,7 @@ function CartSidebarInternal({ cart, onAdd, onViewCart }) {
     const saved = originalTotal - total;
 
     // WhatsApp message logic
-    const waNumber = '919876543210'; // Change to your business number
+    const waNumber = '917696731109'; // Change to your business number
     const waMessage =
         'Hi, I want to book the following AC services:%0A' +
         cart.map(item => `• ${item.title} x${item.qty} (₹${item.price * item.qty})`).join('%0A') +
