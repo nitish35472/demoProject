@@ -17,7 +17,7 @@ function ServiceDetails({ service, onAdd }) {
             </div>
             <div className="mb-2 text-sm text-gray-600">⏱ {service.timeRequired}</div>
             <ul className="list-disc pl-5 mb-4 text-gray-700">
-                {service.details.map((d, i) => <li key={i}>{d}</li>)}
+                {service?.details?.map((d, i) => <li key={i}>{d}</li>)}
             </ul>
             <button
                 className="bg-blue-600 text-white px-6 py-2 rounded shadow hover:bg-blue-700 transition"
