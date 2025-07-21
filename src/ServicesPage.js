@@ -106,52 +106,77 @@ function ServiceCard({ service, onAdd, onClick, cartQty }) {
     );
 }
 
-function CartSidebar({ cart, onAdd, onViewCart }) {
+function CartSidebarInternal({ cart, onAdd, onViewCart }) {
     const total = cart.reduce((sum, item) => sum + item.price * item.qty, 0);
     const originalTotal = cart.reduce((sum, item) => sum + (item.originalPrice || item.price) * item.qty, 0);
     const saved = originalTotal - total;
 
+    // WhatsApp message logic
+    const waNumber = '919876543210'; // Change to your business number
+    const waMessage =
+        'Hi, I want to book the following AC services:%0A' +
+        cart.map(item => `• ${item.title} x${item.qty} (₹${item.price * item.qty})`).join('%0A') +
+        `%0A--------------------%0ATotal: ₹${total}`;
+    const waUrl = `https://wa.me/${waNumber}?text=${waMessage}`;
+
     return (
-        <aside className="w-80 bg-white rounded-2xl shadow-lg p-4 sticky top-6 self-start">
-            <h3 className="text-xl font-bold mb-4">Your Cart</h3>
-            {cart.length === 0 ? (
-                <p className="text-gray-500 text-sm">No items added yet.</p>
-            ) : (
-                cart.map(item => (
-                    <div key={item.id} className="flex justify-between items-center mb-4">
-                        <div>
-                            <p className="text-sm font-medium text-gray-800">{item.title}</p>
-                            <p className="text-xs text-gray-500">Qty: {item.qty}</p>
+        <aside className="w-80 bg-white shadow rounded p-4 flex flex-col gap-4 sticky top-0 self-start">
+            {/* Cart Summary */}
+            <div className="mb-2">
+                <h3 className="font-bold text-lg mb-1">Cart</h3>
+                {cart.length === 0 ? (
+                    <div className="text-gray-500">No items in your cart</div>
+                ) : (
+                    cart.map(item => (
+                        <div key={item.id} className="flex items-center justify-between mb-2">
+                            <span>{item.title}</span>
+                            <div className="flex items-center gap-2">
+                                <button
+                                    className="w-8 h-8 border border-purple-400 text-purple-700 rounded font-bold text-lg hover:bg-purple-50"
+                                    onClick={() => onAdd(item, -1)}
+                                >-</button>
+                                <span className="w-8 text-center font-semibold">{item.qty}</span>
+                                <button
+                                    className="w-8 h-8 border border-purple-400 text-purple-400 rounded font-bold text-lg bg-gray-100 cursor-not-allowed"
+                                    disabled
+                                >+</button>
+                                <span className="ml-2 font-semibold">₹{item.price}</span>
+                                {item.originalPrice ? <span className="ml-1 line-through text-gray-400">₹{item.originalPrice}</span> : null}
+                            </div>
                         </div>
-                        <div className="flex items-center gap-2">
-                            <button
-                                className="w-6 h-6 text-purple-700 border border-purple-400 rounded hover:bg-purple-50 font-bold"
-                                onClick={() => onAdd(item, -1)}
-                            >
-                                -
-                            </button>
-                            <span className="text-sm font-semibold">{item.qty}</span>
-                            <button
-                                className="w-6 h-6 text-purple-400 border border-purple-400 rounded bg-gray-100 cursor-not-allowed font-bold"
-                                disabled
-                            >
-                                +
-                            </button>
-                        </div>
-                    </div>
-                ))
-            )}
+                    ))
+                )}
+            </div>
+            {/* Discount Banner */}
             {saved > 0 && (
-                <div className="mt-4 p-2 text-sm bg-green-100 border border-green-200 rounded text-green-800 font-medium">
-                    🎉 You saved ₹{saved}!
+                <div className="bg-green-700 text-white rounded p-2 text-center font-medium">
+                    🎉 Congratulations! ₹{saved} saved so far!
                 </div>
             )}
-            <button
-                onClick={onViewCart}
-                className="mt-6 w-full bg-purple-600 hover:bg-purple-700 text-white font-semibold py-2 rounded shadow"
+            {/* Proceed to Pay Button */}
+            <a
+                href={cart.length === 0 ? undefined : waUrl}
+                target="_blank"
+                rel="noopener noreferrer"
+                className={`bg-green-600 text-white px-4 py-2 rounded shadow transition mb-2 text-lg font-semibold flex items-center justify-center gap-2 text-center ${cart.length === 0 ? 'opacity-50 cursor-not-allowed pointer-events-none' : 'hover:bg-green-700'}`}
+                style={{ textDecoration: 'none' }}
+                aria-disabled={cart.length === 0}
             >
-                Proceed to Pay ₹{total}
-            </button>
+                Enquire Now
+            </a>
+            {/* Cashback Offer */}
+            <div className="bg-green-50 border border-green-200 text-green-900 rounded p-2 text-center text-sm">
+                <b>Up to ₹150 Cashback</b><br />Valid for Paytm UPI only
+            </div>
+            {/* UC Promise */}
+            <div className="mt-4">
+                <h4 className="font-semibold mb-2">UC Promise</h4>
+                <ul className="space-y-1 text-sm">
+                    <li className="flex items-center gap-2"><span className="text-blue-500">✔️</span> Verified Professionals</li>
+                    <li className="flex items-center gap-2"><span className="text-blue-500">✔️</span> Hassle-Free Booking</li>
+                    <li className="flex items-center gap-2"><span className="text-blue-500">✔️</span> Transparent Pricing</li>
+                </ul>
+            </div>
         </aside>
     );
 }
@@ -304,13 +329,13 @@ function ServicesPage() {
             </div>
             {/* CartSidebar (hidden on mobile, modal on mobile) */}
             <div className="hidden md:block">
-                <CartSidebar cart={cart} onAdd={handleAdd} onViewCart={handleViewCart} />
+                <CartSidebarInternal cart={cart} onAdd={handleAdd} onViewCart={handleViewCart} />
             </div>
             {cartOpen && (
                 <div className="fixed inset-0 z-50 bg-black/40 flex md:hidden" onClick={() => setCartOpen(false)}>
                     <div className="bg-white w-4/5 max-w-xs h-full shadow-lg p-2 ml-auto" onClick={e => e.stopPropagation()}>
                         <button className="mb-4 text-gray-500" onClick={() => setCartOpen(false)}>&larr; Close</button>
-                        <CartSidebar cart={cart} onAdd={handleAdd} onViewCart={handleViewCart} />
+                        <CartSidebarInternal cart={cart} onAdd={handleAdd} onViewCart={handleViewCart} />
                     </div>
                 </div>
             )}
