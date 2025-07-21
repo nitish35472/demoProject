@@ -3,17 +3,19 @@ import { NavLink } from 'react-router-dom';
 
 function Header() {
     return (
-        <header className="flex items-center justify-between px-4 py-2 shadow-md bg-white">
-            {/* Logo */}
-            <div className="flex items-center">
-                <span className="text-2xl font-bold text-blue-600 mr-4">UrbanCool</span>
+        <header className="sticky top-0 z-50 backdrop-blur-md bg-white/70 shadow-sm border-b border-gray-200 px-6 py-3 flex justify-between items-center">
+            {/* Logo and Brand */}
+            <div className="flex items-center gap-3">
+                <img src="./images/logo.png" alt="AC Logo" className="w-10 h-10 object-contain" />
+                <span className="text-2xl font-bold text-blue-600">AC Repair & Service</span>
             </div>
-            {/* Tabs */}
-            <nav className="flex gap-6">
+
+            {/* Navigation Tabs */}
+            <nav className="flex gap-4">
                 <NavLink
                     to="/"
                     className={({ isActive }) =>
-                        `text-lg font-medium px-3 py-1 rounded ${isActive ? 'bg-blue-100 text-blue-700' : 'text-gray-700 hover:bg-gray-100'}`
+                        `px-4 py-2 rounded-lg text-sm font-medium transition ${isActive ? 'bg-blue-100 text-blue-700' : 'text-gray-700 hover:bg-gray-100'}`
                     }
                     end
                 >
@@ -22,27 +24,14 @@ function Header() {
                 <NavLink
                     to="/services"
                     className={({ isActive }) =>
-                        `text-lg font-medium px-3 py-1 rounded ${isActive ? 'bg-blue-100 text-blue-700' : 'text-gray-700 hover:bg-gray-100'}`
+                        `px-4 py-2 rounded-lg text-sm font-medium transition ${isActive ? 'bg-blue-100 text-blue-700' : 'text-gray-700 hover:bg-gray-100'}`
                     }
                 >
                     Services
                 </NavLink>
             </nav>
-            {/* Location Selector */}
-            {/* <div className="flex items-center bg-gray-100 rounded px-3 py-1 mr-4">
-                <span className="material-icons mr-2 text-gray-500">location_on</span>
-                <span className="text-sm font-medium">Connaught Place, New Delhi</span>
-            </div> */}
-            {/* Search Bar */}
-            <div className="flex-1 max-w-md mx-4">
-                <input
-                    type="text"
-                    placeholder="Search in AC Service & Repair"
-                    className="w-full px-4 py-2 border border-gray-200 rounded focus:outline-none focus:ring-2 focus:ring-blue-400"
-                />
-            </div>
         </header>
     );
 }
 
-export default Header; 
+export default Header;

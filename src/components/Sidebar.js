@@ -23,7 +23,7 @@ function Sidebar({ selected, onSelect }) {
             <div className="mx-6 mb-2 bg-green-50 border border-green-200 rounded-lg flex items-center p-4 gap-3">
                 <span className="bg-green-600 text-white rounded-full w-7 h-7 flex items-center justify-center text-lg font-bold">✓</span>
                 <div>
-                    <div className="font-semibold text-green-900 text-base">UC COVER</div>
+                    <div className="font-semibold text-green-900 text-base">AC Repair & Service</div>
                     <div className="text-gray-700 text-sm">Upto 30 days warranty on repairs</div>
                 </div>
             </div>
