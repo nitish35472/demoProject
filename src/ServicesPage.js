@@ -263,8 +263,10 @@ function ServicesPage() {
                 <span className="text-xl">🛒</span>
             </button>
             {/* Sidebar (hidden on mobile, modal on mobile) */}
-            <div className="hidden md:block">
-                <Sidebar selected={selectedSidebarIdx} onSelect={handleSidebarSelect} />
+            <div className="hidden md:block md:w-[320px] md:mr-6">
+                <div className="sticky top-24">
+                    <Sidebar selected={selectedSidebarIdx} onSelect={handleSidebarSelect} />
+                </div>
             </div>
             {sidebarOpen && (
                 <div className="fixed inset-0 z-50 bg-black/40 flex md:hidden" onClick={() => setSidebarOpen(false)}>
@@ -328,12 +330,14 @@ function ServicesPage() {
                 ))}
             </div>
             {/* CartSidebar (hidden on mobile, modal on mobile) */}
-            <div className="hidden md:block">
-                <CartSidebarInternal cart={cart} onAdd={handleAdd} onViewCart={handleViewCart} />
+            <div className="hidden md:block md:w-[320px] md:ml-6">
+                <div className="sticky top-24">
+                    <CartSidebarInternal cart={cart} onAdd={handleAdd} onViewCart={handleViewCart} />
+                </div>
             </div>
             {cartOpen && (
                 <div className="fixed inset-0 z-50 bg-black/40 flex md:hidden" onClick={() => setCartOpen(false)}>
-                    <div className="bg-white w-4/5 max-w-xs h-full shadow-lg p-2 ml-auto" onClick={e => e.stopPropagation()}>
+                    <div className="bg-white w-4/5 max-w-xs h-full shadow-lg p-2 ml-auto max-h-screen overflow-y-auto" onClick={e => e.stopPropagation()}>
                         <button className="mb-4 text-gray-500" onClick={() => setCartOpen(false)}>&larr; Close</button>
                         <CartSidebarInternal cart={cart} onAdd={handleAdd} onViewCart={handleViewCart} />
                     </div>
