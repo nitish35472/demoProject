@@ -12,95 +12,103 @@ const categories = [
 function ServiceCard({ service, onAdd, onClick, cartQty }) {
     return (
         <div
-            className="bg-white rounded-2xl shadow-lg hover:shadow-xl transition duration-300 p-3 sm:p-5 mb-4 sm:mb-6 relative cursor-pointer border border-gray-100 hover:border-purple-500"
+            className="relative rounded-3xl bg-white shadow-lg hover:shadow-2xl hover:-translate-y-1 transition p-4 sm:p-6 mb-5 flex flex-col gap-3"
             onClick={() => onClick(service)}
         >
-            {service.badge && (
-                <div className="absolute top-2 left-2 bg-purple-700 text-white text-xs font-semibold px-2 py-1 rounded">
-                    {service.badge}
-                </div>
-            )}
-            <div className="flex flex-col xs:flex-row gap-2 sm:gap-4">
-                <img
-                    src={service.image}
-                    alt={service.title}
-                    className="w-24 h-20 sm:w-32 sm:h-24 object-cover rounded-xl mx-auto xs:mx-0"
-                />
-                <div className="flex-1">
-                    <div className="font-semibold text-base sm:text-lg text-gray-900 mb-1">{service.title}</div>
-                    <div className="flex items-center text-xs sm:text-sm mb-1">
-                        <span className="text-yellow-500 mr-1">★</span>
-                        <span className="font-semibold mr-1">{service.rating}</span>
-                        <span className="text-gray-500">({service.reviews} reviews)</span>
-                    </div>
-                    <div className="flex flex-wrap items-center text-sm sm:text-base font-bold text-gray-800 mb-1">
-                        ₹{service.price.toLocaleString()}
-                        {service.originalPrice && (
-                            <span className="ml-2 line-through text-xs sm:text-sm font-normal text-gray-400">
-                                ₹{service.originalPrice.toLocaleString()}
-                            </span>
-                        )}
-                        {service.timeRequired && (
-                            <span className="ml-2 text-xs sm:text-sm text-gray-500">• {service.timeRequired}</span>
-                        )}
-                    </div>
-                    {service.perAcPrice && (
-                        <div className="text-green-600 text-xs sm:text-sm font-medium">₹{service.perAcPrice} per AC</div>
-                    )}
-                    {service.highlight && (
-                        <div className="text-green-700 text-xs sm:text-sm font-medium mt-1">{service.highlight}</div>
-                    )}
-                    <ul className="list-disc pl-4 sm:pl-5 text-xs sm:text-sm text-gray-700 mt-1 space-y-1">
-                        {service.details?.map((d, i) => (
-                            <li key={i}>{d}</li>
-                        ))}
-                    </ul>
-                    <div className="mt-2">
-                        <a
-                            href="#"
-                            className="text-purple-600 text-xs sm:text-sm font-medium hover:underline"
-                            onClick={e => {
-                                e.preventDefault();
-                                e.stopPropagation();
-                                onClick(service);
-                            }}
-                        >
-                            View details
-                        </a>
-                    </div>
-                </div>
-                <div className="mt-2 xs:mt-0 xs:ml-2 flex flex-row xs:flex-col items-center xs:items-end flex-shrink-0 gap-2 xs:gap-0">
-                    {cartQty > 0 ? (
-                        <div className="flex flex-row xs:flex-col items-center gap-1 xs:gap-2">
-                            <button
-                                className="w-8 h-8 xs:w-7 xs:h-7 border border-purple-400 text-purple-700 rounded font-bold text-base hover:bg-purple-50"
-                                onClick={e => {
-                                    e.stopPropagation();
-                                    onAdd(service, -1);
-                                }}
-                            >
-                                -
-                            </button>
-                            <span className="w-8 xs:w-7 text-center font-semibold text-base xs:text-sm">{cartQty}</span>
-                            <button
-                                className="w-8 h-8 xs:w-7 xs:h-7 border border-purple-400 text-purple-400 rounded font-bold text-base bg-gray-100 cursor-not-allowed"
-                                disabled
-                            >
-                                +
-                            </button>
+            {/* Image and badge */}
+            <div className="relative flex justify-center items-center mb-3">
+                <div className="relative aspect-[4/3] w-full max-w-[120px] sm:max-w-[128px] bg-gray-50 rounded-2xl overflow-hidden shadow-md border border-gray-100">
+                    <img
+                        src={service.image}
+                        alt={service.title}
+                        className="w-full h-full object-cover"
+                    />
+                    {service.badge && (
+                        <div className="absolute -top-3 -left-3 bg-purple-700 text-white text-xs font-semibold px-3 py-1 rounded-xl shadow-md z-10">
+                            {service.badge}
                         </div>
-                    ) : (
-                        <button
-                            className="px-4 py-2 xs:px-3 xs:py-1 bg-purple-600 text-white rounded hover:bg-purple-700 font-medium text-sm"
-                            onClick={e => {
-                                e.stopPropagation();
-                                onAdd(service, 1);
-                            }}
-                        >
-                            Add
-                        </button>
                     )}
                 </div>
+            </div>
+            <hr className="my-2 border-gray-200" />
+            {/* Details */}
+            <div className="flex-1 flex flex-col gap-1">
+                <div className="font-extrabold text-lg sm:text-xl text-gray-900 mb-1 leading-tight">{service.title}</div>
+                <div className="flex items-center text-xs sm:text-sm mb-1 gap-1">
+                    <span className="text-yellow-500">★</span>
+                    <span className="font-semibold">{service.rating}</span>
+                    <span className="text-gray-500">({service.reviews} reviews)</span>
+                </div>
+                <div className="flex items-center gap-2 mb-1">
+                    <span className="bg-purple-50 text-purple-700 font-bold px-3 py-1 rounded-full text-sm">
+                        ₹{service.price.toLocaleString()}
+                    </span>
+                    {service.originalPrice && (
+                        <span className="line-through text-xs font-normal text-gray-400">
+                            ₹{service.originalPrice.toLocaleString()}
+                        </span>
+                    )}
+                    {service.timeRequired && (
+                        <span className="text-xs text-gray-500">• {service.timeRequired}</span>
+                    )}
+                </div>
+                {service.perAcPrice && (
+                    <div className="text-green-600 text-xs sm:text-sm font-medium">₹{service.perAcPrice} per AC</div>
+                )}
+                {service.highlight && (
+                    <div className="text-green-700 text-xs sm:text-sm font-medium mt-1">{service.highlight}</div>
+                )}
+                <ul className="list-disc pl-4 sm:pl-5 text-xs sm:text-sm text-gray-700 mt-1 space-y-1">
+                    {service.details?.map((d, i) => (
+                        <li key={i}>{d}</li>
+                    ))}
+                </ul>
+                <div className="mt-2">
+                    <a
+                        href="#"
+                        className="text-purple-600 text-xs sm:text-sm font-medium hover:underline"
+                        onClick={e => {
+                            e.preventDefault();
+                            e.stopPropagation();
+                            onClick(service);
+                        }}
+                    >
+                        View details
+                    </a>
+                </div>
+            </div>
+            {/* Add/Qty Controls */}
+            <div className="mt-3">
+                {cartQty > 0 ? (
+                    <div className="flex flex-row xs:flex-col items-center gap-2 w-full">
+                        <button
+                            className="w-9 h-9 border border-purple-400 text-purple-700 rounded-xl font-bold text-base hover:bg-purple-50"
+                            onClick={e => {
+                                e.stopPropagation();
+                                onAdd(service, -1);
+                            }}
+                        >
+                            -
+                        </button>
+                        <span className="w-9 text-center font-semibold text-base">{cartQty}</span>
+                        <button
+                            className="w-9 h-9 border border-purple-400 text-purple-400 rounded-xl font-bold text-base bg-gray-100 cursor-not-allowed"
+                            disabled
+                        >
+                            +
+                        </button>
+                    </div>
+                ) : (
+                    <button
+                        className="w-full py-2 bg-purple-600 text-white rounded-xl hover:bg-purple-700 font-bold text-base shadow-md mt-1"
+                        onClick={e => {
+                            e.stopPropagation();
+                            onAdd(service, 1);
+                        }}
+                    >
+                        Add
+                    </button>
+                )}
             </div>
         </div>
     );
@@ -128,20 +136,26 @@ function CartSidebarInternal({ cart, onAdd, onViewCart }) {
                     <div className="text-gray-500">No items in your cart</div>
                 ) : (
                     cart.map(item => (
-                        <div key={item.id} className="flex items-center justify-between mb-2">
-                            <span>{item.title}</span>
-                            <div className="flex items-center gap-2">
-                                <button
-                                    className="w-8 h-8 border border-purple-400 text-purple-700 rounded font-bold text-lg hover:bg-purple-50"
-                                    onClick={() => onAdd(item, -1)}
-                                >-</button>
-                                <span className="w-8 text-center font-semibold">{item.qty}</span>
-                                <button
-                                    className="w-8 h-8 border border-purple-400 text-purple-400 rounded font-bold text-lg bg-gray-100 cursor-not-allowed"
-                                    disabled
-                                >+</button>
-                                <span className="ml-2 font-semibold">₹{item.price}</span>
-                                {item.originalPrice ? <span className="ml-1 line-through text-gray-400">₹{item.originalPrice}</span> : null}
+                        <div key={item.id} className="mb-4 pb-2 border-b border-gray-100 last:border-b-0 last:mb-0">
+                            <div className="font-semibold text-sm text-gray-900 mb-1">{item.title}</div>
+                            <div className="flex flex-col sm:flex-row items-stretch sm:items-center justify-between gap-3 mt-1">
+                                <div className="flex items-center gap-2 justify-center">
+                                    <button
+                                        className="w-7 h-7 border border-purple-400 text-purple-700 rounded font-bold text-base hover:bg-purple-50"
+                                        onClick={() => onAdd(item, -1)}
+                                    >-</button>
+                                    <span className="w-7 text-center font-semibold text-sm">{item.qty}</span>
+                                    <button
+                                        className="w-7 h-7 border border-purple-400 text-purple-400 rounded font-bold text-base bg-gray-100 cursor-not-allowed"
+                                        disabled
+                                    >+</button>
+                                </div>
+                                <div className="flex flex-col items-center sm:items-end min-w-[60px] mt-2 sm:mt-0">
+                                    <span className="font-bold text-sm text-gray-900">₹{item.price}</span>
+                                    {item.originalPrice ? (
+                                        <span className="line-through text-xs text-gray-400">₹{item.originalPrice}</span>
+                                    ) : null}
+                                </div>
                             </div>
                         </div>
                     ))
@@ -261,6 +275,11 @@ function ServicesPage() {
                 aria-label="Open cart"
             >
                 <span className="text-xl">🛒</span>
+                {cart.length > 0 && (
+                    <span className="absolute top-1 right-1 bg-red-500 text-white text-xs font-bold rounded-full px-1.5 py-0.5 min-w-[20px] h-5 flex items-center justify-center animate-bounce" style={{ fontSize: '0.75rem' }}>
+                        {cart.length}
+                    </span>
+                )}
             </button>
             {/* Sidebar (hidden on mobile, modal on mobile) */}
             <div className="hidden md:block md:w-[320px] md:mr-6">
@@ -337,9 +356,15 @@ function ServicesPage() {
             </div>
             {cartOpen && (
                 <div className="fixed inset-0 z-50 bg-black/40 flex md:hidden" onClick={() => setCartOpen(false)}>
-                    <div className="bg-white w-4/5 max-w-xs h-full shadow-lg p-2 ml-auto max-h-screen overflow-y-auto" onClick={e => e.stopPropagation()}>
-                        <button className="mb-4 text-gray-500" onClick={() => setCartOpen(false)}>&larr; Close</button>
-                        <CartSidebarInternal cart={cart} onAdd={handleAdd} onViewCart={handleViewCart} />
+                    <div className="bg-white/95 w-4/5 max-w-xs h-full shadow-2xl p-0 ml-auto max-h-screen overflow-y-auto rounded-2xl flex flex-col gap-4 px-2" onClick={e => e.stopPropagation()}>
+                        {/* Header with close */}
+                        <div className="flex items-center justify-between px-4 pt-4 pb-2 border-b border-gray-200">
+                            <h3 className="font-bold text-lg">Cart</h3>
+                            <button className="text-gray-500 text-xl" onClick={() => setCartOpen(false)} aria-label="Close cart">&larr; Close</button>
+                        </div>
+                        <div className="flex-1 flex flex-col gap-4 px-2 pb-4">
+                            <CartSidebarInternal cart={cart} onAdd={handleAdd} onViewCart={handleViewCart} />
+                        </div>
                     </div>
                 </div>
             )}

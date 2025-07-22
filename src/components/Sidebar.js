@@ -28,17 +28,23 @@ function Sidebar({ selected, onSelect }) {
                 </div>
             </div>
             {/* Service categories */}
-            <div className="mx-4 md:mx-6 bg-white border border-gray-200 rounded-lg p-3 md:p-4 flex flex-col gap-4">
-                <div className="font-medium text-gray-700 mb-2 text-sm md:text-base">Select a service</div>
-                <div className="grid grid-cols-2 md:grid-cols-2 gap-2 md:gap-4">
+            <div className="mx-4 md:mx-6 bg-white/70 border border-gray-200 rounded-2xl p-4 flex flex-col gap-4 backdrop-blur-md shadow-lg">
+                <div className="font-semibold text-gray-700 mb-2 text-base md:text-lg">Select a service</div>
+                <div className="grid grid-cols-2 gap-3 md:grid-cols-2 md:gap-4">
                     {categories.map((cat, idx) => (
                         <button
                             key={cat.name}
-                            className={`flex flex-col items-center gap-1 md:gap-2 px-1 md:px-2 py-2 md:py-3 rounded-lg border transition font-medium text-center text-xs min-h-[48px] md:min-h-[56px] break-words w-full ${selected === idx ? 'bg-blue-50 border-blue-500 text-blue-700 ring-2 ring-blue-200' : 'bg-gray-50 border-gray-200 hover:bg-gray-100 text-gray-700'}`}
+                            className={`relative flex flex-col items-center justify-center gap-2 px-2 py-5 rounded-xl border transition font-semibold text-center text-xs md:text-sm shadow bg-white/90 border-gray-200 hover:scale-105 hover:shadow-lg focus:outline-none ${selected === idx ? 'ring-2 ring-purple-400 bg-purple-50 scale-105' : 'hover:bg-gray-50 text-gray-700'}`}
+                            style={{ transition: 'transform 0.15s, box-shadow 0.15s' }}
                             onClick={() => onSelect(idx)}
                         >
-                            <span className="text-2xl md:text-3xl">{cat.icon}</span>
-                            <span className="block w-full text-xs break-words text-center">{cat.name}</span>
+                            <span className="text-3xl md:text-4xl drop-shadow-sm">{cat.icon}</span>
+                            <span className="block w-full text-xs md:text-sm break-words text-center font-semibold">{cat.name}</span>
+                            {selected === idx && (
+                                <span className="absolute top-2 right-2 animate-bounce">
+                                    <svg width="20" height="20" fill="none" viewBox="0 0 20 20"><circle cx="10" cy="10" r="10" fill="#a78bfa" /><path d="M6 10.5l3 3 5-5" stroke="#fff" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" /></svg>
+                                </span>
+                            )}
                         </button>
                     ))}
                 </div>
