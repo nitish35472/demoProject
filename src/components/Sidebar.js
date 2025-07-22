@@ -19,7 +19,6 @@ function Sidebar({ selected, onSelect }) {
                     <span className="text-gray-500">(10.9 M bookings)</span>
                 </div>
             </div>
-            {/* UC Cover card */}
             <div className="mx-4 md:mx-6 mb-2 bg-green-50 border border-green-200 rounded-lg flex items-center p-3 md:p-4 gap-3">
                 <span className="bg-green-600 text-white rounded-full w-7 h-7 flex items-center justify-center text-lg font-bold">✓</span>
                 <div>

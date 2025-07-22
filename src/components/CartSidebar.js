@@ -24,9 +24,8 @@ function CartSidebar({ cart, total, onViewCart }) {
             <div className="bg-yellow-100 text-yellow-800 rounded p-1 md:p-2 text-center text-xs md:text-sm">
                 💸 Up to ₹150 Cashback on UPI payment
             </div>
-            {/* UC Promise */}
             <div className="mt-2 md:mt-4">
-                <h4 className="font-semibold mb-1 md:mb-2 text-sm md:text-base">UC Promise</h4>
+                <h4 className="font-semibold mb-1 md:mb-2 text-sm md:text-base">Our Promise</h4>
                 <ul className="space-y-1 text-xs md:text-sm">
                     <li className="flex items-center gap-2"><span className="text-blue-500">✔️</span> Verified Professionals</li>
                     <li className="flex items-center gap-2"><span className="text-blue-500">✔️</span> Hassle-Free Booking</li>

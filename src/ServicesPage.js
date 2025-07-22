@@ -182,9 +182,8 @@ function CartSidebarInternal({ cart, onAdd, onViewCart }) {
             <div className="bg-green-50 border border-green-200 text-green-900 rounded p-2 text-center text-sm">
                 <b>Up to ₹150 Cashback</b><br />Valid for Paytm UPI only
             </div>
-            {/* UC Promise */}
             <div className="mt-4">
-                <h4 className="font-semibold mb-2">UC Promise</h4>
+                <h4 className="font-semibold mb-2">Our Promise</h4>
                 <ul className="space-y-1 text-sm">
                     <li className="flex items-center gap-2"><span className="text-blue-500">✔️</span> Verified Professionals</li>
                     <li className="flex items-center gap-2"><span className="text-blue-500">✔️</span> Hassle-Free Booking</li>
